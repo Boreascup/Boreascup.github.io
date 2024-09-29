@@ -13,7 +13,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>简易使用教程 |  昆虫档案馆</title>
+      <title>用Unity制作简易计算器 |  昆虫档案馆</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -55,7 +55,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-hello-world"
+  id="post-用Unity制作简易计算器"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -66,7 +66,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  简易使用教程
+  用Unity制作简易计算器
 </h1>
  
 
@@ -74,15 +74,19 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2024/09/14/hello-world/" class="article-date">
-  <time datetime="2024-09-13T16:08:04.173Z" itemprop="datePublished">2024-09-14</time>
-</a>   
+      <a href="/2024/09/29/%E7%94%A8Unity%E5%88%B6%E4%BD%9C%E7%AE%80%E6%98%93%E8%AE%A1%E7%AE%97%E5%99%A8/" class="article-date">
+  <time datetime="2024-09-29T00:59:16.000Z" itemprop="datePublished">2024-09-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A/">游戏设计作业</a>
+  </div>
+  
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">48</span>
+            <span class="post-count">1k</span>
         </span>
     </span>
 
@@ -91,7 +95,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1 分钟</span>
+            <span class="post-count">4 分钟</span>
         </span>
     </span>
 </div>
@@ -106,21 +110,112 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>框架：<a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a></p>
-<p>文档： <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> </p>
-<p>QA： <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> </p>
-<p><a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a></p>
+  <h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>初步学习Unity的使用吗，了解游戏对象、空对象、脚本、材质以及它们之间的相互作用关系，掌握常见游戏事件的使用及其执行顺序，学会使用 unity 的简单操作与编程。</p>
+<p>学习mvc 设计，并用于小型游戏编程。</p>
 <span id="more"></span>
 
-<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><h3 id="新建博客"><a href="#新建博客" class="headerlink" title="新建博客"></a>新建博客</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;Name&quot;</span></span><br></pre></td></tr></table></figure>
+<br>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="本地调试"><a href="#本地调试" class="headerlink" title="本地调试"></a>本地调试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h3 id="二、简答题"><a href="#二、简答题" class="headerlink" title="二、简答题"></a>二、简答题</h3><ol>
+<li><strong>游戏对象（GameObjects）与资源（Assets）的区别与联系</strong></li>
+</ol>
+<ul>
+<li>游戏对象是游戏场景中的实体，它们是游戏中一切可见或不可见的东西的基本单元，如玩家、敌人、灯光、摄像机等。每个游戏对象包含多个组件（<code>Component</code>），如 <code>Transform</code>、<code>Renderer</code>、<code>Collider</code> 等，赋予其不同的属性和功能。游戏对象是运行时动态的，可以被激活、销毁或克隆。</li>
+<li>资源是项目中保存的数据文件，如 3D 模型、音频、贴图、脚本等，它们用来构建游戏对象。资源是静态的，存储在项目的 <code>Assets</code> 文件夹中，通常需要加载或实例化成游戏对象才能在场景中使用。资源可以用于生成游戏对象。预制件是一种资源，它可以在运行时实例化为游戏对象。</li>
+</ul>
+<br>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo generate</span><br><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><strong>使用 <code>Debug</code> 验证 <code>MonoBehaviour</code> 的基本行为和事件触发条件</strong></li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MonoBehaviourTest</span> : <span class="title">MonoBehaviour</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Awake</span>()</span>&#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;Awake is called once when the script instance is being loaded.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>()</span>&#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;Start is called before the first frame update.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>()</span>&#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;Update is called once per frame.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FixedUpdate</span>()</span>&#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;FixedUpdate is called once per physics update.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">LateUpdate</span>()</span>&#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;LateUpdate is called after all Update functions have been called.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">OnGUI</span>()</span>&#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;OnGUI is called for rendering and handling GUI events.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">OnDisable</span>()</span>&#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;OnDisable is called when the object becomes disabled.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">OnEnable</span>()</span>&#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;OnEnable is called when the object becomes enabled.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<br>
+
+<ol start="3">
+<li><strong>GameObject、Transform、Component 官方描述的翻译</strong></li>
+</ol>
+<ul>
+<li><code>GameObject</code> 是 Unity 场景中的基本对象，表示角色、道具、场景、摄像机、路径点等。</li>
+<li><code>Transform</code> 组件定义场景中每个对象的位置、旋转和缩放。</li>
+<li><code>Component</code> 是附加到 <code>GameObject</code> 的基础类，用于启用行为、外观和交互。</li>
+</ul>
+<br>
+
+<ol start="4">
+<li><strong>预设（Prefabs）与对象克隆（Clone）</strong></li>
+</ol>
+<ul>
+<li><p>预设的好处</p>
+<ul>
+<li>可以预先定义一个游戏对象，并保存为资源，便于重复使用。</li>
+<li>提高开发效率，便于统一管理和更新对象的属性和行为。</li>
+</ul>
+</li>
+<li><p>预设与克隆的关系</p>
+<ul>
+<li>预设是资源，可以在运行时使用 <code>Instantiate</code> 将其克隆为一个独立的游戏对象。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> GameObject tablePrefab;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    GameObject tableInstance = Instantiate(tablePrefab, <span class="keyword">new</span> Vector3(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>), Quaternion.identity);</span><br><span class="line">    Debug.Log(<span class="string">&quot;Table prefab instantiated.&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="三、编程实践"><a href="#三、编程实践" class="headerlink" title="三、编程实践"></a>三、编程实践</h3><p>实验内容：使用IMGUI构建UI，用MVC模式制作一个简易计算器</p>
+<p><img src="/2024/09/29/%E7%94%A8Unity%E5%88%B6%E4%BD%9C%E7%AE%80%E6%98%93%E8%AE%A1%E7%AE%97%E5%99%A8/image-20240929132323990.png" alt="界面概览"></p>
+<p><strong>MVC模式介绍</strong></p>
+<ul>
+<li>Model模型<ul>
+<li>存储和管理数据。</li>
+<li>处理业务规则和逻辑。</li>
+<li>响应控制器的请求，提供数据给视图。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="built_in">string</span> display = <span class="string">&quot;0&quot;</span>;    <span class="comment">// 显示的值</span></span><br><span class="line"><span class="keyword">private</span> <span class="built_in">string</span> input = <span class="string">&quot;&quot;</span>;       <span class="comment">// 当前输入的数字</span></span><br><span class="line"><span class="keyword">private</span> <span class="built_in">string</span> operation = <span class="string">&quot;&quot;</span>;   <span class="comment">// 当前操作符</span></span><br><span class="line"><span class="keyword">private</span> <span class="built_in">float</span> result = <span class="number">0</span>;        <span class="comment">// 当前计算结果</span></span><br><span class="line"><span class="keyword">private</span> <span class="built_in">bool</span> isNewOperation = <span class="literal">true</span>; <span class="comment">// 是否是新操作</span></span><br><span class="line"><span class="keyword">private</span> <span class="built_in">bool</span> hasOperation = <span class="literal">false</span>;  <span class="comment">// 是否已有操作符</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>View视图</p>
+<ul>
+<li><p>显示模型提供的数据。</p>
+</li>
+<li><p>提供界面元素，供用户操作。</p>
+</li>
+<li><p><code>GUI.Box()</code>：构建显示屏，显示当前的计算结果。</p>
+<p><code>GUI.Button()</code>：生成按钮，供用户点击输入数字和操作符。</p>
+<p><code>PressNumber()</code> 和 <code>PressOperation()</code>：这些是控制器中的函数，用来处理用户输入</p>
+<p><img src="/2024/09/29/%E7%94%A8Unity%E5%88%B6%E4%BD%9C%E7%AE%80%E6%98%93%E8%AE%A1%E7%AE%97%E5%99%A8/image-20240929135408124.png" alt="示例代码"></p>
+</li>
+</ul>
+</li>
+<li><p>Controller控制器</p>
+<ul>
+<li><p>处理用户输入（如表单提交、按钮点击）。</p>
+</li>
+<li><p>调用模型更新数据。</p>
+</li>
+<li><p>决定使用哪个视图来显示结果。</p>
+</li>
+<li><p><code>PressNumber()</code>：处理用户点击数字按钮的事件，更新输入和显示。</p>
+<p><code>PressOperation()</code>：处理操作符按钮的输入，决定何时进行计算。</p>
+<p><code>Calculate()</code>：根据用户输入的操作符，执行相应的计算逻辑。</p>
+<p><code>ResetCalculator()</code>：重置所有状态，恢复计算器到初始状态</p>
+<img src="/2024/09/29/%E7%94%A8Unity%E5%88%B6%E4%BD%9C%E7%AE%80%E6%98%93%E8%AE%A1%E7%AE%97%E5%99%A8/image-20240929135240958.png" alt="示例代码" style="zoom:80%;"></li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h3 id="四、成果展示"><a href="#四、成果展示" class="headerlink" title="四、成果展示"></a>四、成果展示</h3><p><strong>代码仓库</strong></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Boreascup/UnityGameDesignHw/tree/main/hw3%E7%AE%80%E6%98%93%E8%AE%A1%E7%AE%97%E5%99%A8">https://github.com/Boreascup/UnityGameDesignHw/tree/main/hw3%E7%AE%80%E6%98%93%E8%AE%A1%E7%AE%97%E5%99%A8</a></p>
+<p><strong>视频展示</strong></p>
+
+
+ <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
+ <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=113218173276387&bvid=BV1tVx6e2EgS&cid=26053510402&p=1"" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;"></iframe></div>
+
+ 
  
       <!-- reward -->
       
@@ -185,26 +280,33 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://boreascup.github.io/2024/09/14/hello-world/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://boreascup.github.io/2024/09/29/%E7%94%A8Unity%E5%88%B6%E4%BD%9C%E7%AE%80%E6%98%93%E8%AE%A1%E7%AE%97%E5%99%A8/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BD%9C%E4%B8%9A/" rel="tag">作业</a></li></ul>
+
     </footer>
   </div>
 
    
   <nav class="article-nav">
     
-      <a href="/2024/09/14/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87blog/" class="article-nav-link">
+      <a href="/2024/09/29/Unity%E4%B8%AD%E7%9A%84%E7%A9%BA%E9%97%B4%E4%B8%8E%E8%BF%90%E5%8A%A8/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            我的第一篇blog
+            Unity中的空间与运动
           
         </div>
       </a>
     
+    
+      <a href="/2024/09/14/%E7%94%A8Construct3%E5%88%B6%E4%BD%9C%E5%B9%B3%E5%8F%B0%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">用Construct3制作平台跳跃游戏</div>
+      </a>
     
   </nav>
 

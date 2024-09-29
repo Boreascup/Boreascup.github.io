@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Unity中的空间与运动</title>
+    <url>/2024/09/29/Unity%E4%B8%AD%E7%9A%84%E7%A9%BA%E9%97%B4%E4%B8%8E%E8%BF%90%E5%8A%A8/</url>
+    <content><![CDATA[<h1 id="一-简易运动与叠加"><a href="#一-简易运动与叠加" class="headerlink" title="一. 简易运动与叠加"></a>一. 简易运动与叠加</h1><h5 id="1-运动与复合运动"><a href="#1-运动与复合运动" class="headerlink" title="1. 运动与复合运动"></a>1. 运动与复合运动</h5><ul>
+<li><p>创建一个游戏对象</p>
+</li>
+<li><p>创建一个脚本MoveLeft，脚本会使对象每秒向左移动一个单位</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MoveLeft</span> : <span class="title">MonoBehaviour</span>&#123;</span><br><span class="line">    <span class="comment">// Use this for initialization</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>()</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Update is called once per frame</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>()</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.transform.position += Vector3.left * Time.deltaTime;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>其中，Vector表示三维向量，<code>Vector3.left</code> 是单位常数，共有<code>up, down, forward, back</code>等属性</li>
+<li><code>Time.deltaTime</code> 这个循环与上个循环之间的时间差</li>
+</ul>
+</li>
+<li><p>仿照代码创造一个脚本MoveUp，加上speed属性</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="built_in">int</span> speed = <span class="number">2</span>;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">this</span>.transform.position += speed * Vector3.left * Time.deltaTime;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>此脚本会使对象每秒向上平移两个单位</li>
+</ul>
+</li>
+<li><p>把两个脚本都拖动到游戏对象上，发现对象向左上平移</p>
+<ul>
+<li>在对象的属性栏里找到脚本，更改那里新增的speed属性，速度会变化</li>
+<li>注意，这里不用新建空对象！因为是游戏对象自己独立的运动。</li>
+</ul>
+</li>
+</ul>
+<h5 id="2-Transform组件"><a href="#2-Transform组件" class="headerlink" title="2. Transform组件"></a>2. Transform组件</h5>]]></content>
+      <tags>
+        <tag>作业 Unity</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>简易使用教程</title>
     <url>/2024/09/14/hello-world/</url>
     <content><![CDATA[<p>框架：<a href="https://hexo.io/">Hexo</a></p>
@@ -43,9 +76,11 @@
 <p>在线试玩连接：<a href="https://boreascup.github.io/DogJumpIce/">https://boreascup.github.io/DogJumpIce/</a></p>
 <span id="more"></span>
 
-
+<br>
 
 <h1 id="2-游戏概述"><a href="#2-游戏概述" class="headerlink" title="2. 游戏概述"></a>2. 游戏概述</h1><h3 id="2-1-界面概览"><a href="#2-1-界面概览" class="headerlink" title="2.1 界面概览"></a>2.1 界面概览</h3><p><img src="/2024/09/14/%E7%94%A8Construct3%E5%88%B6%E4%BD%9C%E5%B9%B3%E5%8F%B0%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F/image-20240914151410672.png" alt="关卡界面概览"></p>
+<br>
+
 <h3 id="2-2-规则"><a href="#2-2-规则" class="headerlink" title="2.2 规则"></a>2.2 规则</h3><ul>
 <li>你扮演的角色是一只狗。狗可以通过方向键操控，连续按两次↑能够二段跳，按住↓会趴下。趴下时可以移动</li>
 <li>浅色冰块易碎。浅色冰块无法承受狗的体重，狗踩到浅色冰块时冰块将破碎</li>
@@ -57,6 +92,8 @@
 <li>狗是不死狗。狗掉落到底部虚空后会重新回到出生点</li>
 <li>玩家胜利条件是：收集所有星星！吃掉所有骨头！融化所有雪人！</li>
 </ul>
+<br>
+
 <h1 id="3-制作心得"><a href="#3-制作心得" class="headerlink" title="3. 制作心得"></a>3. 制作心得</h1><h3 id="3-1-移动"><a href="#3-1-移动" class="headerlink" title="3.1 移动"></a>3.1 移动</h3><ul>
 <li><p>Construct3（下文简称C3）预设了最基本的角色移动控件。左右转、跳跃、二段跳、平台识别、重力、加速度等物理相关功能几乎一键搞定，十分方便。</p>
 </li>
@@ -108,6 +145,8 @@
 </ul>
 </li>
 </ul>
+<br>
+
 <h1 id="4-视频演示"><a href="#4-视频演示" class="headerlink" title="4. 视频演示"></a>4. 视频演示</h1>
 
  <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
@@ -116,13 +155,130 @@
 
  
 
-
+<br>
 
 <h1 id="5-TODO"><a href="#5-TODO" class="headerlink" title="5. TODO"></a>5. TODO</h1><ul>
 <li>如果可以的话，加大地图</li>
 <li>增加分数显示、血量显示等</li>
 <li>增加bgm和音效</li>
 </ul>
+]]></content>
+      <categories>
+        <category>游戏设计作业</category>
+      </categories>
+      <tags>
+        <tag>作业</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>用Unity制作简易计算器</title>
+    <url>/2024/09/29/%E7%94%A8Unity%E5%88%B6%E4%BD%9C%E7%AE%80%E6%98%93%E8%AE%A1%E7%AE%97%E5%99%A8/</url>
+    <content><![CDATA[<h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>初步学习Unity的使用吗，了解游戏对象、空对象、脚本、材质以及它们之间的相互作用关系，掌握常见游戏事件的使用及其执行顺序，学会使用 unity 的简单操作与编程。</p>
+<p>学习mvc 设计，并用于小型游戏编程。</p>
+<span id="more"></span>
+
+<br>
+
+<h3 id="二、简答题"><a href="#二、简答题" class="headerlink" title="二、简答题"></a>二、简答题</h3><ol>
+<li><strong>游戏对象（GameObjects）与资源（Assets）的区别与联系</strong></li>
+</ol>
+<ul>
+<li>游戏对象是游戏场景中的实体，它们是游戏中一切可见或不可见的东西的基本单元，如玩家、敌人、灯光、摄像机等。每个游戏对象包含多个组件（<code>Component</code>），如 <code>Transform</code>、<code>Renderer</code>、<code>Collider</code> 等，赋予其不同的属性和功能。游戏对象是运行时动态的，可以被激活、销毁或克隆。</li>
+<li>资源是项目中保存的数据文件，如 3D 模型、音频、贴图、脚本等，它们用来构建游戏对象。资源是静态的，存储在项目的 <code>Assets</code> 文件夹中，通常需要加载或实例化成游戏对象才能在场景中使用。资源可以用于生成游戏对象。预制件是一种资源，它可以在运行时实例化为游戏对象。</li>
+</ul>
+<br>
+
+<ol start="2">
+<li><strong>使用 <code>Debug</code> 验证 <code>MonoBehaviour</code> 的基本行为和事件触发条件</strong></li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MonoBehaviourTest</span> : <span class="title">MonoBehaviour</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Awake</span>()</span>&#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;Awake is called once when the script instance is being loaded.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>()</span>&#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;Start is called before the first frame update.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>()</span>&#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;Update is called once per frame.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FixedUpdate</span>()</span>&#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;FixedUpdate is called once per physics update.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">LateUpdate</span>()</span>&#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;LateUpdate is called after all Update functions have been called.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">OnGUI</span>()</span>&#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;OnGUI is called for rendering and handling GUI events.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">OnDisable</span>()</span>&#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;OnDisable is called when the object becomes disabled.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">OnEnable</span>()</span>&#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;OnEnable is called when the object becomes enabled.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<ol start="3">
+<li><strong>GameObject、Transform、Component 官方描述的翻译</strong></li>
+</ol>
+<ul>
+<li><code>GameObject</code> 是 Unity 场景中的基本对象，表示角色、道具、场景、摄像机、路径点等。</li>
+<li><code>Transform</code> 组件定义场景中每个对象的位置、旋转和缩放。</li>
+<li><code>Component</code> 是附加到 <code>GameObject</code> 的基础类，用于启用行为、外观和交互。</li>
+</ul>
+<br>
+
+<ol start="4">
+<li><strong>预设（Prefabs）与对象克隆（Clone）</strong></li>
+</ol>
+<ul>
+<li><p>预设的好处</p>
+<ul>
+<li>可以预先定义一个游戏对象，并保存为资源，便于重复使用。</li>
+<li>提高开发效率，便于统一管理和更新对象的属性和行为。</li>
+</ul>
+</li>
+<li><p>预设与克隆的关系</p>
+<ul>
+<li>预设是资源，可以在运行时使用 <code>Instantiate</code> 将其克隆为一个独立的游戏对象。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> GameObject tablePrefab;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    GameObject tableInstance = Instantiate(tablePrefab, <span class="keyword">new</span> Vector3(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>), Quaternion.identity);</span><br><span class="line">    Debug.Log(<span class="string">&quot;Table prefab instantiated.&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="三、编程实践"><a href="#三、编程实践" class="headerlink" title="三、编程实践"></a>三、编程实践</h3><p>实验内容：使用IMGUI构建UI，用MVC模式制作一个简易计算器</p>
+<p><img src="/2024/09/29/%E7%94%A8Unity%E5%88%B6%E4%BD%9C%E7%AE%80%E6%98%93%E8%AE%A1%E7%AE%97%E5%99%A8/image-20240929132323990.png" alt="界面概览"></p>
+<p><strong>MVC模式介绍</strong></p>
+<ul>
+<li>Model模型<ul>
+<li>存储和管理数据。</li>
+<li>处理业务规则和逻辑。</li>
+<li>响应控制器的请求，提供数据给视图。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="built_in">string</span> display = <span class="string">&quot;0&quot;</span>;    <span class="comment">// 显示的值</span></span><br><span class="line"><span class="keyword">private</span> <span class="built_in">string</span> input = <span class="string">&quot;&quot;</span>;       <span class="comment">// 当前输入的数字</span></span><br><span class="line"><span class="keyword">private</span> <span class="built_in">string</span> operation = <span class="string">&quot;&quot;</span>;   <span class="comment">// 当前操作符</span></span><br><span class="line"><span class="keyword">private</span> <span class="built_in">float</span> result = <span class="number">0</span>;        <span class="comment">// 当前计算结果</span></span><br><span class="line"><span class="keyword">private</span> <span class="built_in">bool</span> isNewOperation = <span class="literal">true</span>; <span class="comment">// 是否是新操作</span></span><br><span class="line"><span class="keyword">private</span> <span class="built_in">bool</span> hasOperation = <span class="literal">false</span>;  <span class="comment">// 是否已有操作符</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>View视图</p>
+<ul>
+<li><p>显示模型提供的数据。</p>
+</li>
+<li><p>提供界面元素，供用户操作。</p>
+</li>
+<li><p><code>GUI.Box()</code>：构建显示屏，显示当前的计算结果。</p>
+<p><code>GUI.Button()</code>：生成按钮，供用户点击输入数字和操作符。</p>
+<p><code>PressNumber()</code> 和 <code>PressOperation()</code>：这些是控制器中的函数，用来处理用户输入</p>
+<p><img src="/2024/09/29/%E7%94%A8Unity%E5%88%B6%E4%BD%9C%E7%AE%80%E6%98%93%E8%AE%A1%E7%AE%97%E5%99%A8/image-20240929135408124.png" alt="示例代码"></p>
+</li>
+</ul>
+</li>
+<li><p>Controller控制器</p>
+<ul>
+<li><p>处理用户输入（如表单提交、按钮点击）。</p>
+</li>
+<li><p>调用模型更新数据。</p>
+</li>
+<li><p>决定使用哪个视图来显示结果。</p>
+</li>
+<li><p><code>PressNumber()</code>：处理用户点击数字按钮的事件，更新输入和显示。</p>
+<p><code>PressOperation()</code>：处理操作符按钮的输入，决定何时进行计算。</p>
+<p><code>Calculate()</code>：根据用户输入的操作符，执行相应的计算逻辑。</p>
+<p><code>ResetCalculator()</code>：重置所有状态，恢复计算器到初始状态</p>
+<img src="/2024/09/29/%E7%94%A8Unity%E5%88%B6%E4%BD%9C%E7%AE%80%E6%98%93%E8%AE%A1%E7%AE%97%E5%99%A8/image-20240929135240958.png" alt="示例代码" style="zoom:80%;"></li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h3 id="四、成果展示"><a href="#四、成果展示" class="headerlink" title="四、成果展示"></a>四、成果展示</h3><p><strong>代码仓库</strong></p>
+<p><a href="https://github.com/Boreascup/UnityGameDesignHw/tree/main/hw3%E7%AE%80%E6%98%93%E8%AE%A1%E7%AE%97%E5%99%A8">https://github.com/Boreascup/UnityGameDesignHw/tree/main/hw3%E7%AE%80%E6%98%93%E8%AE%A1%E7%AE%97%E5%99%A8</a></p>
+<p><strong>视频展示</strong></p>
+
+
+ <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
+ <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=113218173276387&bvid=BV1tVx6e2EgS&cid=26053510402&p=1"" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;"></iframe></div>
+
+ 
 ]]></content>
       <categories>
         <category>游戏设计作业</category>
