@@ -28,7 +28,8 @@
 </ul>
 </li>
 </ul>
-<h5 id="2-Transform组件"><a href="#2-Transform组件" class="headerlink" title="2. Transform组件"></a>2. Transform组件</h5>]]></content>
+<h5 id="2-Transform组件"><a href="#2-Transform组件" class="headerlink" title="2. Transform组件"></a>2. Transform组件</h5><p> 未完待续</p>
+]]></content>
       <tags>
         <tag>作业 Unity</tag>
       </tags>
@@ -63,6 +64,144 @@
       </categories>
       <tags>
         <tag>试验品</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>牧师与魔鬼</title>
+    <url>/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/</url>
+    <content><![CDATA[<h2 id="1-游戏规则"><a href="#1-游戏规则" class="headerlink" title="1. 游戏规则"></a>1. 游戏规则</h2><p>三名牧师与三名魔鬼来到了河的两岸，河上只有一条船，船上一次只能乘坐两个人。只有在船上有人时，船才能移动。</p>
+<p>两岸中的任意一岸，只要魔鬼的数量大于牧师的数量，魔鬼就会吃掉牧师，游戏结束。</p>
+<p>游戏胜利的条件是：所有牧师与魔鬼都到达对岸。</p>
+<p>在本游戏中，黑山羊代表魔鬼，白绵羊代表牧师。</p>
+<span id="more"></span>
+
+<br>
+
+<h2 id="2-素材准备"><a href="#2-素材准备" class="headerlink" title="2. 素材准备"></a>2. 素材准备</h2><p><strong>总体界面概览</strong></p>
+<p><img src="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/image-20241012155703375.png" alt="image-20241012155703375"></p>
+<p><strong>预制游戏对象</strong></p>
+<p>恶魔与牧师采用了Unity Asset Store中的黑山羊&#x2F;白绵羊素材。船、石头与水是普通立方体。天空采用了skybox素材包。</p>
+<p><img src="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/image-20241012155648180.png" alt="预制体"></p>
+<p><img src="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/image-20241012155755324.png" alt="材料"></p>
+<p>暂停游戏、继续游戏、重新开始、显示规则的按钮贴图。</p>
+<p><img src="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/image-20241012155724714.png" alt="UI贴图"></p>
+<p>游戏的四个脚本，采用了MCV架构。</p>
+<p><img src="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/image-20241012155602295.png" alt="脚本"></p>
+<p>由于商店中的羊是不规则建模，不能简单使用球形、立方体碰撞体等，因此我使用了一个胶囊碰撞体并调整参数，以便处理点击事件。</p>
+<img src="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/image-20241012155855348.png" alt="绵羊模型" style="zoom:80%;">
+
+<p><img src="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/image-20241012155907979.png" alt="碰撞体参数"></p>
+<br>
+
+<h2 id="3-编写脚本"><a href="#3-编写脚本" class="headerlink" title="3. 编写脚本"></a>3. 编写脚本</h2><p>脚本代码有参考。</p>
+<h3 id="3-1-Models"><a href="#3-1-Models" class="headerlink" title="3.1 Models"></a>3.1 Models</h3><h4 id="陆地模型"><a href="#陆地模型" class="headerlink" title="陆地模型"></a><strong>陆地模型</strong></h4><p><strong>功能</strong>：表示游戏中的陆地，包括起点和终点两块区域</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LandModel</span>&#123;</span><br><span class="line">	GameObject land;                                </span><br><span class="line">    Vector3[] positions;                            </span><br><span class="line">    <span class="built_in">int</span> land_type;  <span class="comment">//-1为目的地，1为起始地</span></span><br><span class="line">    RoleModel[] roles = <span class="keyword">new</span> RoleModel[<span class="number">6</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LandModel</span>(<span class="params"><span class="built_in">string</span> land_type_string</span>)</span>&#123;</span><br><span class="line">    	positions = <span class="keyword">new</span> Vector3[] &#123;<span class="keyword">new</span> Vector3(<span class="number">5.3F</span>,<span class="number">-0.5F</span>,<span class="number">0</span>), </span><br><span class="line">                                   <span class="keyword">new</span> Vector3(<span class="number">6.1F</span>,<span class="number">-0.5F</span>,<span class="number">0</span>), </span><br><span class="line">                                   <span class="keyword">new</span> Vector3(<span class="number">6.9F</span>,<span class="number">-0.5F</span>,<span class="number">0</span>),</span><br><span class="line">                				   <span class="keyword">new</span> Vector3(<span class="number">7.7F</span>,<span class="number">-0.5F</span>,<span class="number">0</span>), </span><br><span class="line">                                   <span class="keyword">new</span> Vector3(<span class="number">8.5F</span>,<span class="number">-0.5F</span>,<span class="number">0</span>), </span><br><span class="line">                                   <span class="keyword">new</span> Vector3(<span class="number">9.3F</span>,<span class="number">-0.5F</span>,<span class="number">0</span>)&#125;;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (land_type_string == <span class="string">&quot;start&quot;</span>)&#123;</span><br><span class="line">            land = Object.Instantiate(Resources.Load(<span class="string">&quot;Perfabs/Stone&quot;</span>, <span class="keyword">typeof</span>(GameObject)), <span class="keyword">new</span> Vector3(<span class="number">8</span>, <span class="number">-1.5F</span>, <span class="number">0</span>), Quaternion.identity) <span class="keyword">as</span> GameObject;</span><br><span class="line">            land_type = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (land_type_string == <span class="string">&quot;end&quot;</span>)&#123;</span><br><span class="line">            land = Object.Instantiate(Resources.Load(<span class="string">&quot;Perfabs/Stone&quot;</span>, <span class="keyword">typeof</span>(GameObject)), <span class="keyword">new</span> Vector3(<span class="number">-8</span>, <span class="number">-1.5F</span>, <span class="number">0</span>), Quaternion.identity) <span class="keyword">as</span> GameObject;</span><br><span class="line">            land_type = <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方法：</p>
+<p><code>GetEmptyIndex()</code>：获取空位的索引。</p>
+<p><code>AddRoleOnLand()</code>：在陆地上添加角色。</p>
+<p><code>DeleteRoleByName()</code>：根据名字删除陆地上的角色。</p>
+<p><code>Reset()</code>：重置陆地，清空角色。</p>
+<br>
+
+<h4 id="船模型"><a href="#船模型" class="headerlink" title="船模型"></a><strong>船模型</strong></h4><p><strong>功能</strong>：表示游戏中的船，负责角色的跨岸移动</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BoatModel</span>&#123;</span><br><span class="line">    GameObject boat;                                          </span><br><span class="line">    Vector3[] start_vacancy;                </span><br><span class="line">    Vector3[] end_vacancy;                  </span><br><span class="line">    Move move;                                                    </span><br><span class="line">    Click click;</span><br><span class="line">    <span class="built_in">int</span> boat_sign = <span class="number">1</span>;                      </span><br><span class="line">    RoleModel[] roles = <span class="keyword">new</span> RoleModel[<span class="number">2</span>];   </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BoatModel</span>()</span>&#123;</span><br><span class="line">        boat = Object.Instantiate(Resources.Load(<span class="string">&quot;Perfabs/Boat&quot;</span>, <span class="keyword">typeof</span>(GameObject)), <span class="keyword">new</span> Vector3(<span class="number">4</span>, <span class="number">-1.3F</span>, <span class="number">0</span>), Quaternion.identity) <span class="keyword">as</span> GameObject;</span><br><span class="line">        boat.name = <span class="string">&quot;boat&quot;</span>;</span><br><span class="line">        move = boat.AddComponent(<span class="keyword">typeof</span>(Move)) <span class="keyword">as</span> Move;</span><br><span class="line">        click = boat.AddComponent(<span class="keyword">typeof</span>(Click)) <span class="keyword">as</span> Click;</span><br><span class="line">        click.SetBoat(<span class="keyword">this</span>);</span><br><span class="line">        start_vacancy = <span class="keyword">new</span> Vector3[] &#123; <span class="keyword">new</span> Vector3(<span class="number">3.5F</span>, <span class="number">-1</span>, <span class="number">0</span>), <span class="keyword">new</span> Vector3(<span class="number">4.5F</span>, <span class="number">-1</span>, <span class="number">0</span>) &#125;;</span><br><span class="line">        end_vacancy = <span class="keyword">new</span> Vector3[] &#123; <span class="keyword">new</span> Vector3(<span class="number">-4.5F</span>, <span class="number">-1</span>, <span class="number">0</span>), <span class="keyword">new</span> Vector3(<span class="number">-3.5F</span>, <span class="number">-1</span>, <span class="number">0</span>) &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法</strong>：</p>
+<ul>
+<li><code>BoatMove()</code>：移动船只，并根据船的位置调整船上角色的朝向（起点时朝向60度，终点时朝向-120度）。</li>
+<li><code>AddRoleOnBoat()</code>：在船上添加角色。</li>
+<li><code>RemoveRoleFromBoat()</code>：角色从船上下到陆地时调整角色朝向。</li>
+<li><code>Reset()</code>：重置船的位置并清空角色</li>
+</ul>
+<br>
+
+<h4 id="角色模型"><a href="#角色模型" class="headerlink" title="角色模型"></a><strong>角色模型</strong></h4><p><strong>功能</strong>：表示游戏中的角色，包含牧师和魔鬼两种角色，负责角色的移动及朝向控制。</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RoleModel</span>&#123;</span><br><span class="line">     GameObject role;           </span><br><span class="line">     <span class="built_in">int</span> role_sign;             </span><br><span class="line">     Click click;</span><br><span class="line">     Move move;</span><br><span class="line">     <span class="built_in">bool</span> on_boat;                </span><br><span class="line"></span><br><span class="line">     LandModel land_model = (SSDirector.GetInstance().CurrentScenceController <span class="keyword">as</span> Controllor).start_land;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="title">RoleModel</span>(<span class="params"><span class="built_in">string</span> role_name</span>)</span>&#123;</span><br><span class="line">         <span class="keyword">if</span> (role_name == <span class="string">&quot;priest&quot;</span>)&#123;</span><br><span class="line">             role = Object.Instantiate(Resources.Load(<span class="string">&quot;Perfabs/Priest&quot;</span>, <span class="keyword">typeof</span>(GameObject)), Vector3.zero, Quaternion.Euler(<span class="number">0</span>, <span class="number">-120</span>, <span class="number">0</span>)) <span class="keyword">as</span> GameObject;</span><br><span class="line">             role_sign = <span class="number">0</span>;</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">else</span>&#123;</span><br><span class="line">             role = Object.Instantiate(Resources.Load(<span class="string">&quot;Perfabs/Devil&quot;</span>, <span class="keyword">typeof</span>(GameObject)), Vector3.zero, Quaternion.Euler(<span class="number">0</span>, <span class="number">-120</span>, <span class="number">0</span>)) <span class="keyword">as</span> GameObject;</span><br><span class="line">             role_sign = <span class="number">1</span>;</span><br><span class="line">         &#125;</span><br><span class="line">         move = role.AddComponent(<span class="keyword">typeof</span>(Move)) <span class="keyword">as</span> Move;</span><br><span class="line">         click = role.AddComponent(<span class="keyword">typeof</span>(Click)) <span class="keyword">as</span> Click;</span><br><span class="line"></span><br><span class="line">         click.SetRole(<span class="keyword">this</span>);</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法</strong>：</p>
+<ul>
+<li><code>Move()</code>：让角色移动到指定位置。</li>
+<li><code>MoveToLand()</code>：将角色从船上移到陆地。</li>
+<li><code>MoveToBoat()</code>：将角色从陆地移到船上。</li>
+<li><code>SetFaceToStartLand()</code>和<code>SetFaceToEndLand()</code>：设置角色在起始岸和终点岸的朝向。</li>
+<li><code>Reset()</code>：重置角色位置和朝向。</li>
+</ul>
+<br>
+
+<h4 id="计时器"><a href="#计时器" class="headerlink" title="计时器"></a><strong>计时器</strong></h4><p><strong>功能</strong>：用于记录游戏时间。</p>
+<p><strong>成员变量</strong>：记录小时、分钟、秒等。</p>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><code>Update()</code>：每秒更新时间。</li>
+<li><code>Reset()</code>：重置时间。</li>
+<li><code>StopTiming()</code>：暂停计时。</li>
+<li><code>beginTiming()</code>：开始计时</li>
+</ul>
+<h4 id="移动"><a href="#移动" class="headerlink" title="移动"></a><strong>移动</strong></h4><p><strong>功能</strong>：控制角色的移动动画。</p>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><code>MovePosition()</code>：通过插值的方式移动角色或船到指定位置</li>
+</ul>
+<h4 id="鼠标点击"><a href="#鼠标点击" class="headerlink" title="鼠标点击"></a><strong>鼠标点击</strong></h4><p><strong>功能</strong>：控制用户点击的交互行为。</p>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><code>OnMouseDown()</code>：点击船时移动船，点击角色时移动角色。</li>
+</ul>
+<br>
+
+<br>
+
+<h3 id="3-2-Controller"><a href="#3-2-Controller" class="headerlink" title="3.2 Controller"></a>3.2 Controller</h3><p>该类继承了<code>MonoBehaviour</code>, <code>ISceneController</code>, <code>IUserAction</code>类，这个类负责整个游戏的控制逻辑，包括资源加载、移动船只、移动角色、检查游戏状态、以及重新开始游戏。</p>
+<h4 id="加载资源"><a href="#加载资源" class="headerlink" title="加载资源"></a><strong>加载资源</strong></h4><p>创建了水、两块陆地、船、三个牧师以及三个恶魔，并规定它们的位置。</p>
+<h4 id="移动船只"><a href="#移动船只" class="headerlink" title="移动船只"></a><strong>移动船只</strong></h4><figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">MoveBoat</span>()</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (judge.IsEmptyBoat(boat) || !judge.isPlaying()) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    boat.BoatMove();</span><br><span class="line">    <span class="built_in">int</span> gamestate = judge.Check(start_land, destination, boat);</span><br><span class="line">    <span class="keyword">if</span> (gamestate &gt; <span class="number">0</span>) timer.StopTiming();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>该函数用于控制船的移动。只有在船上有角色并且游戏处于进行状态时，船才能移动。</p>
+<p>移动后会触发 <code>Judge.Check</code> 来检测当前游戏状态。</p>
+<h4 id="移动角色"><a href="#移动角色" class="headerlink" title="移动角色"></a><strong>移动角色</strong></h4><figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">MoveRole</span>(<span class="params">RoleModel role</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!judge.isPlaying()) <span class="keyword">return</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (judge.IsOnBoat(role))&#123;</span><br><span class="line">        LandModel land;</span><br><span class="line">        <span class="keyword">if</span> (boat.GetBoatSign() == <span class="number">-1</span>)</span><br><span class="line">            land = destination;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            land = start_land;</span><br><span class="line"></span><br><span class="line">        boat.DeleteRoleByName(role.GetName());</span><br><span class="line">        role.Move(land.GetEmpty());</span><br><span class="line">        role.MoveToLand(land);</span><br><span class="line">        land.AddRoleOnLand(role);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (land == start_land)</span><br><span class="line">            role.SetFaceToStartLand();</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            role.SetFaceToEndLand();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        LandModel land = role.GetLandModel();</span><br><span class="line">        <span class="keyword">if</span> (boat.GetEmptyIndex() == <span class="number">-1</span> || land.GetLandType() != boat.GetBoatSign()) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        land.DeleteRoleByName(role.GetName());</span><br><span class="line">        role.Move(boat.GetEmpty());</span><br><span class="line">        role.MoveToBoat(boat);</span><br><span class="line">        boat.AddRoleOnBoat(role);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">int</span> gamestate = judge.Check(start_land, destination, boat);</span><br><span class="line">    <span class="keyword">if</span> (gamestate &gt; <span class="number">0</span>) timer.StopTiming();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>角色的移动逻辑较为复杂：</p>
+<ul>
+<li>如果角色在船上，点击后它会回到船停靠的陆地。</li>
+<li>如果角色在陆地上且船有空位，并且船停在它所在的岸边，角色会上船。</li>
+<li>每次移动角色后，都会调用 <code>Judge.Check</code> 来检测游戏状态。</li>
+<li>根据角色上岸的陆地，调整角色的朝向。</li>
+<li>最终达成的效果是：当角色在两岸上时，朝向固定方向。当角色被船载着移动时，角色朝向船的移动方向。</li>
+</ul>
+<br>
+
+<h3 id="3-3-Judge"><a href="#3-3-Judge" class="headerlink" title="3.3 Judge"></a>3.3 Judge</h3><p><code>Judge</code> 类的主要功能是用于判断游戏状态（胜利、失败、进行中等），并实现了几个与游戏状态和规则相关的方法。</p>
+<ul>
+<li>判断船是否为空<ul>
+<li>通过遍历船上的角色，检查船是否为空。如果船上的角色数组中有任何非空的元素，返回 <code>false</code>，否则返回 <code>true</code></li>
+</ul>
+</li>
+<li>判断角色是否在船上<ul>
+<li>通过调用 <code>RoleModel</code> 中的 <code>getIsOnBoat</code> 方法，检查某个角色是否在船上。</li>
+</ul>
+</li>
+<li>判断游戏是否结束<ul>
+<li>首先获取起点和终点陆地上牧师和魔鬼的数量</li>
+<li>胜利条件：终点（<code>destination</code>）上的角色数量达到 6（表示所有角色都已成功过河）</li>
+<li>船上角色的数量更新：根据船的位置，将船上的角色数量加到起点或终点的数量上</li>
+<li>失败条件：在任意一侧（起点或终点），如果牧师的数量大于0并且小于魔鬼的数量（牧师会被魔鬼吃掉），游戏失败</li>
+<li>如果不满足胜利或失败条件，游戏继续进行</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<br>
+
+<h2 id="4-视频演示"><a href="#4-视频演示" class="headerlink" title="4. 视频演示"></a>4. 视频演示</h2>
+
+ <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
+ <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=113292949330113&bvid=BV1nb2bYzEHs&cid=26253853675&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;"></iframe></div>
+
+ 
+]]></content>
+      <tags>
+        <tag>游戏设计作业</tag>
       </tags>
   </entry>
   <entry>

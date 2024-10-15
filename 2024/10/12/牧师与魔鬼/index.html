@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="一个普通的个人博客" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>牧师与魔鬼 |  昆虫档案馆</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-牧师与魔鬼"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  牧师与魔鬼
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/" class="article-date">
+  <time datetime="2024-10-12T06:58:38.000Z" itemprop="datePublished">2024-10-12</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.7k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="1-游戏规则"><a href="#1-游戏规则" class="headerlink" title="1. 游戏规则"></a>1. 游戏规则</h2><p>三名牧师与三名魔鬼来到了河的两岸，河上只有一条船，船上一次只能乘坐两个人。只有在船上有人时，船才能移动。</p>
+<p>两岸中的任意一岸，只要魔鬼的数量大于牧师的数量，魔鬼就会吃掉牧师，游戏结束。</p>
+<p>游戏胜利的条件是：所有牧师与魔鬼都到达对岸。</p>
+<p>在本游戏中，黑山羊代表魔鬼，白绵羊代表牧师。</p>
+<span id="more"></span>
+
+<br>
+
+<h2 id="2-素材准备"><a href="#2-素材准备" class="headerlink" title="2. 素材准备"></a>2. 素材准备</h2><p><strong>总体界面概览</strong></p>
+<p><img src="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/image-20241012155703375.png" alt="image-20241012155703375"></p>
+<p><strong>预制游戏对象</strong></p>
+<p>恶魔与牧师采用了Unity Asset Store中的黑山羊&#x2F;白绵羊素材。船、石头与水是普通立方体。天空采用了skybox素材包。</p>
+<p><img src="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/image-20241012155648180.png" alt="预制体"></p>
+<p><img src="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/image-20241012155755324.png" alt="材料"></p>
+<p>暂停游戏、继续游戏、重新开始、显示规则的按钮贴图。</p>
+<p><img src="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/image-20241012155724714.png" alt="UI贴图"></p>
+<p>游戏的四个脚本，采用了MCV架构。</p>
+<p><img src="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/image-20241012155602295.png" alt="脚本"></p>
+<p>由于商店中的羊是不规则建模，不能简单使用球形、立方体碰撞体等，因此我使用了一个胶囊碰撞体并调整参数，以便处理点击事件。</p>
+<img src="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/image-20241012155855348.png" alt="绵羊模型" style="zoom:80%;">
+
+<p><img src="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/image-20241012155907979.png" alt="碰撞体参数"></p>
+<br>
+
+<h2 id="3-编写脚本"><a href="#3-编写脚本" class="headerlink" title="3. 编写脚本"></a>3. 编写脚本</h2><p>脚本代码有参考。</p>
+<h3 id="3-1-Models"><a href="#3-1-Models" class="headerlink" title="3.1 Models"></a>3.1 Models</h3><h4 id="陆地模型"><a href="#陆地模型" class="headerlink" title="陆地模型"></a><strong>陆地模型</strong></h4><p><strong>功能</strong>：表示游戏中的陆地，包括起点和终点两块区域</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LandModel</span>&#123;</span><br><span class="line">	GameObject land;                                </span><br><span class="line">    Vector3[] positions;                            </span><br><span class="line">    <span class="built_in">int</span> land_type;  <span class="comment">//-1为目的地，1为起始地</span></span><br><span class="line">    RoleModel[] roles = <span class="keyword">new</span> RoleModel[<span class="number">6</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LandModel</span>(<span class="params"><span class="built_in">string</span> land_type_string</span>)</span>&#123;</span><br><span class="line">    	positions = <span class="keyword">new</span> Vector3[] &#123;<span class="keyword">new</span> Vector3(<span class="number">5.3F</span>,<span class="number">-0.5F</span>,<span class="number">0</span>), </span><br><span class="line">                                   <span class="keyword">new</span> Vector3(<span class="number">6.1F</span>,<span class="number">-0.5F</span>,<span class="number">0</span>), </span><br><span class="line">                                   <span class="keyword">new</span> Vector3(<span class="number">6.9F</span>,<span class="number">-0.5F</span>,<span class="number">0</span>),</span><br><span class="line">                				   <span class="keyword">new</span> Vector3(<span class="number">7.7F</span>,<span class="number">-0.5F</span>,<span class="number">0</span>), </span><br><span class="line">                                   <span class="keyword">new</span> Vector3(<span class="number">8.5F</span>,<span class="number">-0.5F</span>,<span class="number">0</span>), </span><br><span class="line">                                   <span class="keyword">new</span> Vector3(<span class="number">9.3F</span>,<span class="number">-0.5F</span>,<span class="number">0</span>)&#125;;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (land_type_string == <span class="string">&quot;start&quot;</span>)&#123;</span><br><span class="line">            land = Object.Instantiate(Resources.Load(<span class="string">&quot;Perfabs/Stone&quot;</span>, <span class="keyword">typeof</span>(GameObject)), <span class="keyword">new</span> Vector3(<span class="number">8</span>, <span class="number">-1.5F</span>, <span class="number">0</span>), Quaternion.identity) <span class="keyword">as</span> GameObject;</span><br><span class="line">            land_type = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (land_type_string == <span class="string">&quot;end&quot;</span>)&#123;</span><br><span class="line">            land = Object.Instantiate(Resources.Load(<span class="string">&quot;Perfabs/Stone&quot;</span>, <span class="keyword">typeof</span>(GameObject)), <span class="keyword">new</span> Vector3(<span class="number">-8</span>, <span class="number">-1.5F</span>, <span class="number">0</span>), Quaternion.identity) <span class="keyword">as</span> GameObject;</span><br><span class="line">            land_type = <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方法：</p>
+<p><code>GetEmptyIndex()</code>：获取空位的索引。</p>
+<p><code>AddRoleOnLand()</code>：在陆地上添加角色。</p>
+<p><code>DeleteRoleByName()</code>：根据名字删除陆地上的角色。</p>
+<p><code>Reset()</code>：重置陆地，清空角色。</p>
+<br>
+
+<h4 id="船模型"><a href="#船模型" class="headerlink" title="船模型"></a><strong>船模型</strong></h4><p><strong>功能</strong>：表示游戏中的船，负责角色的跨岸移动</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BoatModel</span>&#123;</span><br><span class="line">    GameObject boat;                                          </span><br><span class="line">    Vector3[] start_vacancy;                </span><br><span class="line">    Vector3[] end_vacancy;                  </span><br><span class="line">    Move move;                                                    </span><br><span class="line">    Click click;</span><br><span class="line">    <span class="built_in">int</span> boat_sign = <span class="number">1</span>;                      </span><br><span class="line">    RoleModel[] roles = <span class="keyword">new</span> RoleModel[<span class="number">2</span>];   </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BoatModel</span>()</span>&#123;</span><br><span class="line">        boat = Object.Instantiate(Resources.Load(<span class="string">&quot;Perfabs/Boat&quot;</span>, <span class="keyword">typeof</span>(GameObject)), <span class="keyword">new</span> Vector3(<span class="number">4</span>, <span class="number">-1.3F</span>, <span class="number">0</span>), Quaternion.identity) <span class="keyword">as</span> GameObject;</span><br><span class="line">        boat.name = <span class="string">&quot;boat&quot;</span>;</span><br><span class="line">        move = boat.AddComponent(<span class="keyword">typeof</span>(Move)) <span class="keyword">as</span> Move;</span><br><span class="line">        click = boat.AddComponent(<span class="keyword">typeof</span>(Click)) <span class="keyword">as</span> Click;</span><br><span class="line">        click.SetBoat(<span class="keyword">this</span>);</span><br><span class="line">        start_vacancy = <span class="keyword">new</span> Vector3[] &#123; <span class="keyword">new</span> Vector3(<span class="number">3.5F</span>, <span class="number">-1</span>, <span class="number">0</span>), <span class="keyword">new</span> Vector3(<span class="number">4.5F</span>, <span class="number">-1</span>, <span class="number">0</span>) &#125;;</span><br><span class="line">        end_vacancy = <span class="keyword">new</span> Vector3[] &#123; <span class="keyword">new</span> Vector3(<span class="number">-4.5F</span>, <span class="number">-1</span>, <span class="number">0</span>), <span class="keyword">new</span> Vector3(<span class="number">-3.5F</span>, <span class="number">-1</span>, <span class="number">0</span>) &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法</strong>：</p>
+<ul>
+<li><code>BoatMove()</code>：移动船只，并根据船的位置调整船上角色的朝向（起点时朝向60度，终点时朝向-120度）。</li>
+<li><code>AddRoleOnBoat()</code>：在船上添加角色。</li>
+<li><code>RemoveRoleFromBoat()</code>：角色从船上下到陆地时调整角色朝向。</li>
+<li><code>Reset()</code>：重置船的位置并清空角色</li>
+</ul>
+<br>
+
+<h4 id="角色模型"><a href="#角色模型" class="headerlink" title="角色模型"></a><strong>角色模型</strong></h4><p><strong>功能</strong>：表示游戏中的角色，包含牧师和魔鬼两种角色，负责角色的移动及朝向控制。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RoleModel</span>&#123;</span><br><span class="line">     GameObject role;           </span><br><span class="line">     <span class="built_in">int</span> role_sign;             </span><br><span class="line">     Click click;</span><br><span class="line">     Move move;</span><br><span class="line">     <span class="built_in">bool</span> on_boat;                </span><br><span class="line"></span><br><span class="line">     LandModel land_model = (SSDirector.GetInstance().CurrentScenceController <span class="keyword">as</span> Controllor).start_land;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="title">RoleModel</span>(<span class="params"><span class="built_in">string</span> role_name</span>)</span>&#123;</span><br><span class="line">         <span class="keyword">if</span> (role_name == <span class="string">&quot;priest&quot;</span>)&#123;</span><br><span class="line">             role = Object.Instantiate(Resources.Load(<span class="string">&quot;Perfabs/Priest&quot;</span>, <span class="keyword">typeof</span>(GameObject)), Vector3.zero, Quaternion.Euler(<span class="number">0</span>, <span class="number">-120</span>, <span class="number">0</span>)) <span class="keyword">as</span> GameObject;</span><br><span class="line">             role_sign = <span class="number">0</span>;</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">else</span>&#123;</span><br><span class="line">             role = Object.Instantiate(Resources.Load(<span class="string">&quot;Perfabs/Devil&quot;</span>, <span class="keyword">typeof</span>(GameObject)), Vector3.zero, Quaternion.Euler(<span class="number">0</span>, <span class="number">-120</span>, <span class="number">0</span>)) <span class="keyword">as</span> GameObject;</span><br><span class="line">             role_sign = <span class="number">1</span>;</span><br><span class="line">         &#125;</span><br><span class="line">         move = role.AddComponent(<span class="keyword">typeof</span>(Move)) <span class="keyword">as</span> Move;</span><br><span class="line">         click = role.AddComponent(<span class="keyword">typeof</span>(Click)) <span class="keyword">as</span> Click;</span><br><span class="line"></span><br><span class="line">         click.SetRole(<span class="keyword">this</span>);</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法</strong>：</p>
+<ul>
+<li><code>Move()</code>：让角色移动到指定位置。</li>
+<li><code>MoveToLand()</code>：将角色从船上移到陆地。</li>
+<li><code>MoveToBoat()</code>：将角色从陆地移到船上。</li>
+<li><code>SetFaceToStartLand()</code>和<code>SetFaceToEndLand()</code>：设置角色在起始岸和终点岸的朝向。</li>
+<li><code>Reset()</code>：重置角色位置和朝向。</li>
+</ul>
+<br>
+
+<h4 id="计时器"><a href="#计时器" class="headerlink" title="计时器"></a><strong>计时器</strong></h4><p><strong>功能</strong>：用于记录游戏时间。</p>
+<p><strong>成员变量</strong>：记录小时、分钟、秒等。</p>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><code>Update()</code>：每秒更新时间。</li>
+<li><code>Reset()</code>：重置时间。</li>
+<li><code>StopTiming()</code>：暂停计时。</li>
+<li><code>beginTiming()</code>：开始计时</li>
+</ul>
+<h4 id="移动"><a href="#移动" class="headerlink" title="移动"></a><strong>移动</strong></h4><p><strong>功能</strong>：控制角色的移动动画。</p>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><code>MovePosition()</code>：通过插值的方式移动角色或船到指定位置</li>
+</ul>
+<h4 id="鼠标点击"><a href="#鼠标点击" class="headerlink" title="鼠标点击"></a><strong>鼠标点击</strong></h4><p><strong>功能</strong>：控制用户点击的交互行为。</p>
+<p><strong>方法</strong>：</p>
+<ul>
+<li><code>OnMouseDown()</code>：点击船时移动船，点击角色时移动角色。</li>
+</ul>
+<br>
+
+<br>
+
+<h3 id="3-2-Controller"><a href="#3-2-Controller" class="headerlink" title="3.2 Controller"></a>3.2 Controller</h3><p>该类继承了<code>MonoBehaviour</code>, <code>ISceneController</code>, <code>IUserAction</code>类，这个类负责整个游戏的控制逻辑，包括资源加载、移动船只、移动角色、检查游戏状态、以及重新开始游戏。</p>
+<h4 id="加载资源"><a href="#加载资源" class="headerlink" title="加载资源"></a><strong>加载资源</strong></h4><p>创建了水、两块陆地、船、三个牧师以及三个恶魔，并规定它们的位置。</p>
+<h4 id="移动船只"><a href="#移动船只" class="headerlink" title="移动船只"></a><strong>移动船只</strong></h4><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">MoveBoat</span>()</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (judge.IsEmptyBoat(boat) || !judge.isPlaying()) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    boat.BoatMove();</span><br><span class="line">    <span class="built_in">int</span> gamestate = judge.Check(start_land, destination, boat);</span><br><span class="line">    <span class="keyword">if</span> (gamestate &gt; <span class="number">0</span>) timer.StopTiming();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>该函数用于控制船的移动。只有在船上有角色并且游戏处于进行状态时，船才能移动。</p>
+<p>移动后会触发 <code>Judge.Check</code> 来检测当前游戏状态。</p>
+<h4 id="移动角色"><a href="#移动角色" class="headerlink" title="移动角色"></a><strong>移动角色</strong></h4><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">MoveRole</span>(<span class="params">RoleModel role</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!judge.isPlaying()) <span class="keyword">return</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (judge.IsOnBoat(role))&#123;</span><br><span class="line">        LandModel land;</span><br><span class="line">        <span class="keyword">if</span> (boat.GetBoatSign() == <span class="number">-1</span>)</span><br><span class="line">            land = destination;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            land = start_land;</span><br><span class="line"></span><br><span class="line">        boat.DeleteRoleByName(role.GetName());</span><br><span class="line">        role.Move(land.GetEmpty());</span><br><span class="line">        role.MoveToLand(land);</span><br><span class="line">        land.AddRoleOnLand(role);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (land == start_land)</span><br><span class="line">            role.SetFaceToStartLand();</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            role.SetFaceToEndLand();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        LandModel land = role.GetLandModel();</span><br><span class="line">        <span class="keyword">if</span> (boat.GetEmptyIndex() == <span class="number">-1</span> || land.GetLandType() != boat.GetBoatSign()) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        land.DeleteRoleByName(role.GetName());</span><br><span class="line">        role.Move(boat.GetEmpty());</span><br><span class="line">        role.MoveToBoat(boat);</span><br><span class="line">        boat.AddRoleOnBoat(role);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">int</span> gamestate = judge.Check(start_land, destination, boat);</span><br><span class="line">    <span class="keyword">if</span> (gamestate &gt; <span class="number">0</span>) timer.StopTiming();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>角色的移动逻辑较为复杂：</p>
+<ul>
+<li>如果角色在船上，点击后它会回到船停靠的陆地。</li>
+<li>如果角色在陆地上且船有空位，并且船停在它所在的岸边，角色会上船。</li>
+<li>每次移动角色后，都会调用 <code>Judge.Check</code> 来检测游戏状态。</li>
+<li>根据角色上岸的陆地，调整角色的朝向。</li>
+<li>最终达成的效果是：当角色在两岸上时，朝向固定方向。当角色被船载着移动时，角色朝向船的移动方向。</li>
+</ul>
+<br>
+
+<h3 id="3-3-Judge"><a href="#3-3-Judge" class="headerlink" title="3.3 Judge"></a>3.3 Judge</h3><p><code>Judge</code> 类的主要功能是用于判断游戏状态（胜利、失败、进行中等），并实现了几个与游戏状态和规则相关的方法。</p>
+<ul>
+<li>判断船是否为空<ul>
+<li>通过遍历船上的角色，检查船是否为空。如果船上的角色数组中有任何非空的元素，返回 <code>false</code>，否则返回 <code>true</code></li>
+</ul>
+</li>
+<li>判断角色是否在船上<ul>
+<li>通过调用 <code>RoleModel</code> 中的 <code>getIsOnBoat</code> 方法，检查某个角色是否在船上。</li>
+</ul>
+</li>
+<li>判断游戏是否结束<ul>
+<li>首先获取起点和终点陆地上牧师和魔鬼的数量</li>
+<li>胜利条件：终点（<code>destination</code>）上的角色数量达到 6（表示所有角色都已成功过河）</li>
+<li>船上角色的数量更新：根据船的位置，将船上的角色数量加到起点或终点的数量上</li>
+<li>失败条件：在任意一侧（起点或终点），如果牧师的数量大于0并且小于魔鬼的数量（牧师会被魔鬼吃掉），游戏失败</li>
+<li>如果不满足胜利或失败条件，游戏继续进行</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<br>
+
+<h2 id="4-视频演示"><a href="#4-视频演示" class="headerlink" title="4. 视频演示"></a>4. 视频演示</h2>
+
+ <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
+ <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=113292949330113&bvid=BV1nb2bYzEHs&cid=26253853675&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;"></iframe></div>
+
+ 
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://boreascup.github.io/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E4%BD%9C%E4%B8%9A/" rel="tag">游戏设计作业</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2024/09/29/Unity%E4%B8%AD%E7%9A%84%E7%A9%BA%E9%97%B4%E4%B8%8E%E8%BF%90%E5%8A%A8/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Unity中的空间与运动</div>
+      </a>
+    
+  </nav>
+
+   
+<!-- valine评论 -->
+<div id="vcomments-box">
+  <div id="vcomments"></div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.staticfile.org/valine/1.4.16/Valine.min.js"></script>
+<script>
+  new Valine({
+    el: "#vcomments",
+    app_id: "5utm3pyrguGYqLrlALzjALDL-gzGzoHsz",
+    app_key: "Ymn0aT3htgJrfpcIoX4hyB3O",
+    path: window.location.pathname,
+    avatar: "monsterid",
+    placeholder: "欢迎留言！",
+    recordIP: true,
+  });
+  const infoEle = document.querySelector("#vcomments .info");
+  if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+    infoEle.childNodes.forEach(function (item) {
+      item.parentNode.removeChild(item);
+    });
+  }
+</script>
+<style>
+  #vcomments-box {
+    padding: 5px 30px;
+  }
+
+  @media screen and (max-width: 800px) {
+    #vcomments-box {
+      padding: 5px 0px;
+    }
+  }
+
+  #vcomments-box #vcomments {
+    background-color: #fff;
+  }
+
+  .v .vlist .vcard .vh {
+    padding-right: 20px;
+  }
+
+  .v .vlist .vcard {
+    padding-left: 10px;
+  }
+</style>
+
+ 
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2024
+        <i class="ri-heart-fill heart_icon"></i> Boreascup
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="images/bigcat.png" alt="昆虫档案馆"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
