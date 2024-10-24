@@ -122,8 +122,8 @@
 <p><img src="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/image-20241012155755324.png" alt="材料"></p>
 <p>暂停游戏、继续游戏、重新开始、显示规则的按钮贴图。</p>
 <p><img src="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/image-20241012155724714.png" alt="UI贴图"></p>
-<p>游戏的四个脚本，采用了MCV架构。</p>
-<p><img src="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/image-20241012155602295.png" alt="脚本"></p>
+<p>游戏UML图</p>
+<p><img src="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/image-20241024230022503.png" alt="UML"></p>
 <p>由于商店中的羊是不规则建模，不能简单使用球形、立方体碰撞体等，因此我使用了一个胶囊碰撞体并调整参数，以便处理点击事件。</p>
 <img src="/2024/10/12/%E7%89%A7%E5%B8%88%E4%B8%8E%E9%AD%94%E9%AC%BC/image-20241012155855348.png" alt="绵羊模型" style="zoom:80%;">
 
@@ -230,6 +230,11 @@
 
 <br>
 
+
+
+<p><code>SSAction</code> 是动作的基类，<code>CCMoveToAction</code> 实现了简单的移动，<code>CCSequenceAction</code> 实现了顺序执行多个动作。</p>
+<p><code>ActionManager</code> 负责管理所有动作的执行与更新。</p>
+<p><code>SceneController</code> 实现回调，处理动作完成后的逻辑</p>
 <h2 id="4-视频演示"><a href="#4-视频演示" class="headerlink" title="4. 视频演示"></a>4. 视频演示</h2>
 
  <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
