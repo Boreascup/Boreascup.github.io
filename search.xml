@@ -460,7 +460,7 @@
 <li><strong>DiskAttributes</strong>：飞碟属性类，包含飞碟的各项数据，如分数、速度、旋转角度等。</li>
 <li><strong>RoundController</strong>：回合控制器，负责协调飞碟动作的执行。</li>
 </ol>
-<p><img src="/2024/11/08/%E9%BC%A0%E6%A0%87%E6%89%93%E9%A3%9E%E7%A2%9F/WorkSpace\myblog\source_posts\鼠标打飞碟\image-20241108171823248.png" alt="UML图"></p>
+<p><img src="/2024/11/08/%E9%BC%A0%E6%A0%87%E6%89%93%E9%A3%9E%E7%A2%9F/image-20241108171823248.png" alt="UML图"></p>
 <!--br-->
 
 <h4 id="3-具体实现"><a href="#3-具体实现" class="headerlink" title="3. 具体实现"></a>3. 具体实现</h4><h5 id="3-1-飞碟动作管理"><a href="#3-1-飞碟动作管理" class="headerlink" title="3.1 飞碟动作管理"></a>3.1 飞碟动作管理</h5><p>系统使用了<code>SSAction</code>抽象类来定义所有飞碟动作的基础行为。<code>SSActionManager</code>类则是动作的管理器，负责控制飞碟的飞行与回收。通过实现<code>IActionManager</code>接口和<code>IActionCallback</code>接口，使得飞碟动作的管理更加模块化和灵活。主要的动作类型包括：</p>
@@ -474,7 +474,7 @@
 <h5 id="3-2-飞碟生成与控制"><a href="#3-2-飞碟生成与控制" class="headerlink" title="3.2 飞碟生成与控制"></a>3.2 飞碟生成与控制</h5><p><code>DiskFactory</code>类负责生成飞碟，管理飞碟的回收与重复使用。生成的飞碟会被加入到活动列表中，通过<code>SSActionManager</code>控制其飞行动作。每个飞碟都会有一个与之关联的<code>DiskAttributes</code>类，包含飞碟的速度、旋转角度和其他属性。</p>
 <h5 id="3-3-动作管理与更新"><a href="#3-3-动作管理与更新" class="headerlink" title="3.3 动作管理与更新"></a>3.3 动作管理与更新</h5><p><code>SSActionManager</code>在每一帧更新时检查所有飞碟的状态，并对当前的动作进行更新。通过<code>RunAction</code>方法将新的动作添加到动作队列中，并通过<code>Update</code>方法更新正在进行的动作。</p>
 <h5 id="3-4-设计模式与接口"><a href="#3-4-设计模式与接口" class="headerlink" title="3.4 设计模式与接口"></a>3.4 设计模式与接口</h5><p>系统采用了接口和回调机制，确保了动作管理系统的灵活性和可扩展性。<code>IActionManager</code>接口定义了动作管理器的基本功能，而<code>IActionCallback</code>接口则用于飞碟在动作执行完成后通知管理器。</p>
-<p><img src="/2024/11/08/%E9%BC%A0%E6%A0%87%E6%89%93%E9%A3%9E%E7%A2%9F/WorkSpace\myblog\source_posts\鼠标打飞碟\image-20241108170839378.png" alt="游戏脚本"></p>
+<p><img src="/2024/11/08/%E9%BC%A0%E6%A0%87%E6%89%93%E9%A3%9E%E7%A2%9F/image-20241108170839378.png" alt="游戏脚本"></p>
 <h4 id="4-实验结果"><a href="#4-实验结果" class="headerlink" title="4. 实验结果"></a>4. 实验结果</h4><p>通过实现以上系统，我们成功地生成并控制了飞碟的运动。系统能够动态生成飞碟并执行不同的飞行动作，包括物理飞行和自定义速度飞行。此外，飞碟的生成与回收通过<code>DiskFactory</code>对象池进行管理，确保资源的高效使用。</p>
 <h4 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h4><p>本实验通过实现飞碟的生成与控制系统，深入理解了如何使用面向对象设计模式管理复杂的对象行为。通过将动作和管理逻辑分离，使得系统具有了良好的扩展性，可以轻松地添加新的飞行动作类型。接口和回调机制的应用也为系统提供了更高的灵活性和可维护性。</p>
 
