@@ -35,6 +35,117 @@
       </tags>
   </entry>
   <entry>
+    <title>Unity第一人称射箭游戏制作</title>
+    <url>/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/</url>
+    <content><![CDATA[<h3 id="一、游戏介绍"><a href="#一、游戏介绍" class="headerlink" title="一、游戏介绍"></a>一、游戏介绍</h3><p>使用Unity制作一个第一人称射箭游戏。</p>
+<ul>
+<li>玩家使用WASD移动</li>
+<li>使用空格键拉弓，只有在指定射击区域内才能拉弓</li>
+<li>使用鼠标左键射击</li>
+<li>使用鼠标右键打开瞄准镜</li>
+<li>使用F1切换鸟瞰图视角，便于定位当前位置</li>
+</ul>
+<p>游戏中有两个射击场，一个在迷宫尽头，一个在山顶。射击场分别有两个运动靶和两个静态靶，射中运动靶加十分，射中静态靶加二十分。</p>
+<!--br-->
+
+<h3 id="二、游戏制作"><a href="#二、游戏制作" class="headerlink" title="二、游戏制作"></a>二、游戏制作</h3><ol>
+<li>资源导入</li>
+</ol>
+<p>   导入四个资源包，分别是十字弩、天空盒、植物、靶子。</p>
+<p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129091926724.png" alt="资源"></p>
+<p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129092349170.png" alt="资源"></p>
+<!--br-->
+
+<ol start="2">
+<li>设置天空盒</li>
+</ol>
+<p>   随着时间流逝，游戏内天空盒应当自行切换。编写天空盒控制脚本：</p>
+   <figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SkyBoxController</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> Material[] skyboxes; <span class="comment">// 天空盒材质数组</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> currentSkyboxIndex = <span class="number">0</span>; <span class="comment">// 当前天空盒索引</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> switchInterval = <span class="number">5f</span>; <span class="comment">// 切换间隔时间</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (skyboxes.Length == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            Debug.LogError(<span class="string">&quot;请在Inspector中分配天空盒材质！&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        RenderSettings.skybox = skyboxes[currentSkyboxIndex]; <span class="comment">// 设置初始天空盒</span></span><br><span class="line">        InvokeRepeating(<span class="string">&quot;SwitchSkybox&quot;</span>, switchInterval, switchInterval); </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">SwitchSkybox</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        currentSkyboxIndex = (currentSkyboxIndex + <span class="number">1</span>) % skyboxes.Length; </span><br><span class="line">        RenderSettings.skybox = skyboxes[currentSkyboxIndex]; <span class="comment">// 应用新天空盒</span></span><br><span class="line">        Debug.Log(<span class="string">$&quot;切换到天空盒: <span class="subst">&#123;skyboxes[currentSkyboxIndex].name&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>   在Hierarchy面板中创建空对象，命名为skyboxController，绑定天空盒脚本。</p>
+<p>   <img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129092554927.png" alt="天空盒"></p>
+   <!--br-->
+
+<ol start="3">
+<li><p>绘制地形</p>
+<p>在Hierarchy面板中创建Terrain对象。使用Inspector面板中的Terrain组件，导入先前素材包中的地面材质、植物等素材。用Plaint Texture设置地形材质，使用Set Height绘制山，使用Smooth Height绘制斜坡，使用Plant Trees和Plant Detail绘制其他细节。</p>
+<p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129094439502.png" alt="迷宫"></p>
+</li>
+</ol>
+<p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129094712106.png" alt="山路"></p>
+<p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129095818380.png" alt="山坡"></p>
+<!--br-->
+
+<ol start="4">
+<li><p>设置背景音乐</p>
+<p>创建一个空对象，命名为Music Manager，添加Audio Source组件和脚本组件，绑定背景音乐脚本，并把指定的音乐拖入选择框。</p>
+<p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129095521779.png" alt="音乐管理器"></p>
+</li>
+</ol>
+<p>游戏开始后，会自动循环播放背景音乐。</p>
+<!--br-->
+
+<ol start="5">
+<li><p>玩家</p>
+<p>创建一个3D对象命名Player。为了实现第一人称效果，需把主摄像机拖动到Player对象底下，再把十字弩拖动到主摄像机底下。</p>
+</li>
+</ol>
+<p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129101851274.png" alt="玩家组件结构"></p>
+<p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129102945907.png" alt="将弩弓和摄像机调整至合适位置"></p>
+<p>给Player对象增加碰撞组件和刚体组件，并把Freeze Rotation的x、y、z轴都勾选，避免不必要的旋转。绑定Camera Controller脚本，用于接收键盘输入，控制玩家游走。</p>
+<p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129103815497.png" alt="玩家面板"></p>
+<!--br-->
+
+<ol start="6">
+<li><p>多摄像机</p>
+<p>为了增加射击体验，玩家按右键时能瞄准，并在视野中显示准星；玩家按下F1时，画面右上角会出现鸟瞰图，标识玩家目前位置。</p>
+<p>新建一个TopDownCamera相机作为鸟瞰图相机，将X轴旋转调整为90度，使其朝向地面。然后为其添加CameraFollow脚本，让它保持在目标物体（玩家）上方50个单位处。</p>
+<p>新建一个RenderTexture，命名为TopDownRenderTexture，将其绑定到TopDownCamera的Target Texture中。这样，鸟瞰图摄像机的画面将被渲染到Texture里。再在Hierarchy面板里新建一个Raw Image，在Texture里绑定TopDownRenderTexture。在Rect Transform组件内调整Image的位置，让它固定在画面右上角。</p>
+<p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129142923918.png" alt="鸟瞰图摄像机"></p>
+<p>新建一个Camera Manager空对象，绑定Camera Switch脚本以及其他相关对象，实现按下F1时展示鸟瞰图。</p>
+<p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129143411972.png" alt="摄像机管理组件"></p>
+<p>最终实现如图：</p>
+<p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129143758388.png" alt="右上角显示鸟瞰图"></p>
+<!--br-->
+</li>
+<li><p>靶场</p>
+<p>给静态靶和动态靶都加上标签，以便区分。网格碰撞体为资源自带。给动态靶额外加上刚体组件，并勾选is Kinematic。为动态靶绑定移动动画。将其放置到场景合适位置。</p>
+<p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129104303236.png" alt="静态靶"></p>
+</li>
+</ol>
+<p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129155251585.png" alt="动态靶"></p>
+<!--br-->
+
+<ol start="8">
+<li>射击</li>
+</ol>
+<p>使用动画实现拉弓射箭效果。其中hold是混合树。</p>
+<p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129164639032.png" alt="动画"></p>
+<p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129164815968.png" alt="混合树"></p>
+<p>在弩弓上绑定Archer Controller，射箭预备代码如下：</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 右键按下，开启瞄准</span></span><br><span class="line">    <span class="keyword">if</span> (Input.GetMouseButtonDown(<span class="number">1</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        isAiming = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 右键松开，取消瞄准</span></span><br><span class="line">    <span class="keyword">if</span> (Input.GetMouseButtonUp(<span class="number">1</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        isAiming = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 平滑过渡视角</span></span><br><span class="line">    <span class="keyword">if</span> (maincam != <span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">float</span> targetFOV = isAiming ? aimFOV : normalFOV;</span><br><span class="line">        maincam.fieldOfView = Mathf.Lerp(maincam.fieldOfView, targetFOV, aimTransitionSpeed * Time.deltaTime);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 检查是否在允许射击的范围内</span></span><br><span class="line">    <span class="keyword">if</span> (IsInArea())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 按住空格键：拉弓</span></span><br><span class="line">        <span class="keyword">if</span> (Input.GetKeyDown(KeyCode.Space))</span><br><span class="line">        &#123;</span><br><span class="line">            pullDuration = <span class="number">0</span>;</span><br><span class="line">            isPulling = <span class="literal">true</span>;</span><br><span class="line">            animator.SetBool(<span class="string">&quot;isPulling&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">            animator.SetBool(<span class="string">&quot;isShooting&quot;</span>, <span class="literal">false</span>);</span><br><span class="line">            animator.SetBool(<span class="string">&quot;isHolding&quot;</span>, <span class="literal">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 持续按住空格键计算拉力</span></span><br><span class="line">        <span class="keyword">if</span> (isPulling)</span><br><span class="line">        &#123;</span><br><span class="line">            pullDuration += Time.deltaTime;</span><br><span class="line">            pullStrength = Mathf.Clamp01(pullDuration / maxPullDuration);</span><br><span class="line">            animator.SetFloat(<span class="string">&quot;pullStrength&quot;</span>, pullStrength); <span class="comment">// 更新Animator中的参数</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 松开空格键：保持当前拉力状态</span></span><br><span class="line">        <span class="keyword">if</span> (Input.GetKeyUp(KeyCode.Space))</span><br><span class="line">        &#123;</span><br><span class="line">            isPulling = <span class="literal">false</span>;</span><br><span class="line">            animator.SetBool(<span class="string">&quot;isPulling&quot;</span>, <span class="literal">false</span>);</span><br><span class="line">            animator.SetBool(<span class="string">&quot;isHolding&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 按下鼠标左键：发射箭矢</span></span><br><span class="line">        <span class="keyword">if</span> (Input.GetMouseButtonDown(<span class="number">0</span>) &amp;&amp; animator.GetBool(<span class="string">&quot;isHolding&quot;</span>))</span><br><span class="line">        &#123;</span><br><span class="line">            animator.SetBool(<span class="string">&quot;isShooting&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">            animator.SetBool(<span class="string">&quot;isHolding&quot;</span>, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 动画事件触发箭矢发射</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>射击代码：</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">FireArrow</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 检查射箭区域</span></span><br><span class="line">    Vector3 currentPosition = transform.position;</span><br><span class="line">    Vector3 area1 = <span class="keyword">new</span> Vector3(<span class="number">489f</span>, <span class="number">46f</span>, <span class="number">593f</span>);</span><br><span class="line">    Vector3 area2 = <span class="keyword">new</span> Vector3(<span class="number">666f</span>, <span class="number">4f</span>, <span class="number">343f</span>);</span><br><span class="line">    <span class="built_in">float</span> radius = <span class="number">10f</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">bool</span> inArea1 = Vector3.Distance(currentPosition, area1) &lt;= radius;</span><br><span class="line">    <span class="built_in">bool</span> inArea2 = Vector3.Distance(currentPosition, area2) &lt;= radius;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (inArea1 &amp;&amp; area1Shots &gt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        area1Shots--; <span class="comment">// 减少区域1箭数</span></span><br><span class="line">        Debug.Log(<span class="string">$&quot;区域1剩余箭数：<span class="subst">&#123;area1Shots&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (inArea2 &amp;&amp; area2Shots &gt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        area2Shots--; <span class="comment">// 减少区域2箭数</span></span><br><span class="line">        Debug.Log(<span class="string">$&quot;区域2剩余箭数：<span class="subst">&#123;area2Shots&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        Debug.LogWarning(<span class="string">&quot;当前区域无箭数可用！&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建箭矢对象</span></span><br><span class="line">    GameObject arrow = Instantiate&lt;GameObject&gt;(Resources.Load&lt;GameObject&gt;(<span class="string">&quot;Prefabs/Arrow&quot;</span>));</span><br><span class="line">    arrow.AddComponent&lt;ArrowController&gt;();</span><br><span class="line">    ArrowController arrowController = arrow.GetComponent&lt;ArrowController&gt;();</span><br><span class="line">    arrowController.hitSound = Resources.Load&lt;AudioClip&gt;(<span class="string">&quot;Sound/hit&quot;</span>);</span><br><span class="line">    arrowController.cam = maincam;</span><br><span class="line"></span><br><span class="line">    arrow.transform.position = firePoint.transform.position;</span><br><span class="line">    arrow.transform.rotation = Quaternion.LookRotation(<span class="keyword">this</span>.transform.forward);</span><br><span class="line"></span><br><span class="line">    Rigidbody rd = arrow.GetComponent&lt;Rigidbody&gt;();</span><br><span class="line">    <span class="keyword">if</span> (rd != <span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        rd.AddForce(<span class="keyword">this</span>.transform.forward * <span class="number">1</span> * pullStrength, ForceMode.Impulse);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 播放射箭音效</span></span><br><span class="line">        <span class="keyword">if</span> (arrowShootSound != <span class="literal">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            audioSource.PlayOneShot(arrowShootSound);</span><br><span class="line">            Debug.Log(<span class="string">$&quot;播放了射箭音效&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 动画回到Empty状态</span></span><br><span class="line">    animator.SetBool(<span class="string">&quot;isShooting&quot;</span>, <span class="literal">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>击中运动靶后，运动靶会有自然下坠效果。</p>
+<figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TriggerTargetReaction</span>(<span class="params">GameObject target</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 停止动画播放</span></span><br><span class="line">    Animator targetAnimator = target.GetComponent&lt;Animator&gt;();</span><br><span class="line">    <span class="keyword">if</span> (targetAnimator != <span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        targetAnimator.enabled = <span class="literal">false</span>; <span class="comment">// 停止动画</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置靶子为可下落状态</span></span><br><span class="line">    Rigidbody targetRb = target.GetComponent&lt;Rigidbody&gt;();</span><br><span class="line">    <span class="keyword">if</span> (targetRb != <span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        targetRb.isKinematic = <span class="literal">false</span>; <span class="comment">// 解除刚体固定</span></span><br><span class="line">        targetRb.useGravity = <span class="literal">true</span>;   <span class="comment">// 启用重力</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Destroy(target, <span class="number">2f</span>); <span class="comment">// 2 秒后销毁靶子</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<!--br-->
+
+<h3 id="三、演示视频"><a href="#三、演示视频" class="headerlink" title="三、演示视频"></a>三、演示视频</h3>
+
+ <div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
+ <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=113565444872347&bvid=BV1FDzzYSEYS&cid=27090618236&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;"></iframe></div>
+
+
+ 
+]]></content>
+      <tags>
+        <tag>作业</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>简易使用教程</title>
     <url>/2024/09/14/hello-world/</url>
     <content><![CDATA[<p>框架：<a href="https://hexo.io/">Hexo</a></p>
