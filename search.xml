@@ -46,7 +46,9 @@
 <li>使用F1切换鸟瞰图视角，便于定位当前位置</li>
 </ul>
 <p>游戏中有两个射击场，一个在迷宫尽头，一个在山顶。射击场分别有两个运动靶和两个静态靶，射中运动靶加十分，射中静态靶加二十分。</p>
-<!--br-->
+<span id="more"></span>
+
+<br>
 
 <h3 id="二、游戏制作"><a href="#二、游戏制作" class="headerlink" title="二、游戏制作"></a>二、游戏制作</h3><ol>
 <li>资源导入</li>
@@ -54,7 +56,7 @@
 <p>   导入四个资源包，分别是十字弩、天空盒、植物、靶子。</p>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129091926724.png" alt="资源"></p>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129092349170.png" alt="资源"></p>
-<!--br-->
+<br>
 
 <ol start="2">
 <li>设置天空盒</li>
@@ -64,7 +66,7 @@
 
 <p>   在Hierarchy面板中创建空对象，命名为skyboxController，绑定天空盒脚本。</p>
 <p>   <img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129092554927.png" alt="天空盒"></p>
-   <!--br-->
+   <br>
 
 <ol start="3">
 <li><p>绘制地形</p>
@@ -74,7 +76,7 @@
 </ol>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129094712106.png" alt="山路"></p>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129095818380.png" alt="山坡"></p>
-<!--br-->
+<br>
 
 <ol start="4">
 <li><p>设置背景音乐</p>
@@ -83,7 +85,7 @@
 </li>
 </ol>
 <p>游戏开始后，会自动循环播放背景音乐。</p>
-<!--br-->
+<br>
 
 <ol start="5">
 <li><p>玩家</p>
@@ -94,7 +96,7 @@
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129102945907.png" alt="将弩弓和摄像机调整至合适位置"></p>
 <p>给Player对象增加碰撞组件和刚体组件，并把Freeze Rotation的x、y、z轴都勾选，避免不必要的旋转。绑定Camera Controller脚本，用于接收键盘输入，控制玩家游走。</p>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129103815497.png" alt="玩家面板"></p>
-<!--br-->
+<br>
 
 <ol start="6">
 <li><p>多摄像机</p>
@@ -106,7 +108,7 @@
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129143411972.png" alt="摄像机管理组件"></p>
 <p>最终实现如图：</p>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129143758388.png" alt="右上角显示鸟瞰图"></p>
-<!--br-->
+<br>
 </li>
 <li><p>靶场</p>
 <p>给静态靶和动态靶都加上标签，以便区分。网格碰撞体为资源自带。给动态靶额外加上刚体组件，并勾选is Kinematic。为动态靶绑定移动动画。将其放置到场景合适位置。</p>
@@ -114,7 +116,7 @@
 </li>
 </ol>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129155251585.png" alt="动态靶"></p>
-<!--br-->
+<br>
 
 <ol start="8">
 <li>射击</li>
@@ -131,7 +133,7 @@
 <p>击中运动靶后，运动靶会有自然下坠效果。</p>
 <figure class="highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TriggerTargetReaction</span>(<span class="params">GameObject target</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 停止动画播放</span></span><br><span class="line">    Animator targetAnimator = target.GetComponent&lt;Animator&gt;();</span><br><span class="line">    <span class="keyword">if</span> (targetAnimator != <span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        targetAnimator.enabled = <span class="literal">false</span>; <span class="comment">// 停止动画</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置靶子为可下落状态</span></span><br><span class="line">    Rigidbody targetRb = target.GetComponent&lt;Rigidbody&gt;();</span><br><span class="line">    <span class="keyword">if</span> (targetRb != <span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        targetRb.isKinematic = <span class="literal">false</span>; <span class="comment">// 解除刚体固定</span></span><br><span class="line">        targetRb.useGravity = <span class="literal">true</span>;   <span class="comment">// 启用重力</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Destroy(target, <span class="number">2f</span>); <span class="comment">// 2 秒后销毁靶子</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<!--br-->
+<br>
 
 <h3 id="三、演示视频"><a href="#三、演示视频" class="headerlink" title="三、演示视频"></a>三、演示视频</h3>
 
