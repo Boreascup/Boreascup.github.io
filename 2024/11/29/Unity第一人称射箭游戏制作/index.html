@@ -119,57 +119,37 @@
 
 <br>
 
-<h3 id="二、游戏制作"><a href="#二、游戏制作" class="headerlink" title="二、游戏制作"></a>二、游戏制作</h3><ol>
-<li>资源导入</li>
-</ol>
-<p>   导入四个资源包，分别是十字弩、天空盒、植物、靶子。</p>
+<h3 id="二、游戏制作"><a href="#二、游戏制作" class="headerlink" title="二、游戏制作"></a>二、游戏制作</h3><h4 id="1-资源导入"><a href="#1-资源导入" class="headerlink" title="1. 资源导入"></a>1. 资源导入</h4><p>导入四个资源包，分别是十字弩、天空盒、植物、靶子。</p>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129091926724.png" alt="资源"></p>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129092349170.png" alt="资源"></p>
 <br>
 
-<ol start="2">
-<li>设置天空盒</li>
-</ol>
-<p>   随着时间流逝，游戏内天空盒应当自行切换。编写天空盒控制脚本：</p>
-   <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SkyBoxController</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> Material[] skyboxes; <span class="comment">// 天空盒材质数组</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> currentSkyboxIndex = <span class="number">0</span>; <span class="comment">// 当前天空盒索引</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> switchInterval = <span class="number">5f</span>; <span class="comment">// 切换间隔时间</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (skyboxes.Length == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            Debug.LogError(<span class="string">&quot;请在Inspector中分配天空盒材质！&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        RenderSettings.skybox = skyboxes[currentSkyboxIndex]; <span class="comment">// 设置初始天空盒</span></span><br><span class="line">        InvokeRepeating(<span class="string">&quot;SwitchSkybox&quot;</span>, switchInterval, switchInterval); </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">SwitchSkybox</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        currentSkyboxIndex = (currentSkyboxIndex + <span class="number">1</span>) % skyboxes.Length; </span><br><span class="line">        RenderSettings.skybox = skyboxes[currentSkyboxIndex]; <span class="comment">// 应用新天空盒</span></span><br><span class="line">        Debug.Log(<span class="string">$&quot;切换到天空盒: <span class="subst">&#123;skyboxes[currentSkyboxIndex].name&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="2-设置天空盒"><a href="#2-设置天空盒" class="headerlink" title="2. 设置天空盒"></a>2. 设置天空盒</h4><p>随着时间流逝，游戏内天空盒应当自行切换。编写天空盒控制脚本：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SkyBoxController</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> Material[] skyboxes; <span class="comment">// 天空盒材质数组</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> currentSkyboxIndex = <span class="number">0</span>; <span class="comment">// 当前天空盒索引</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> switchInterval = <span class="number">5f</span>; <span class="comment">// 切换间隔时间</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (skyboxes.Length == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            Debug.LogError(<span class="string">&quot;请在Inspector中分配天空盒材质！&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        RenderSettings.skybox = skyboxes[currentSkyboxIndex]; <span class="comment">// 设置初始天空盒</span></span><br><span class="line">        InvokeRepeating(<span class="string">&quot;SwitchSkybox&quot;</span>, switchInterval, switchInterval); </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">SwitchSkybox</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        currentSkyboxIndex = (currentSkyboxIndex + <span class="number">1</span>) % skyboxes.Length; </span><br><span class="line">        RenderSettings.skybox = skyboxes[currentSkyboxIndex]; <span class="comment">// 应用新天空盒</span></span><br><span class="line">        Debug.Log(<span class="string">$&quot;切换到天空盒: <span class="subst">&#123;skyboxes[currentSkyboxIndex].name&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>   在Hierarchy面板中创建空对象，命名为skyboxController，绑定天空盒脚本。</p>
-<p>   <img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129092554927.png" alt="天空盒"></p>
-   <br>
+<p>在Hierarchy面板中创建空对象，命名为skyboxController，绑定天空盒脚本。</p>
+<p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129092554927.png" alt="天空盒"></p>
+<br>
 
-<ol start="3">
-<li><p>绘制地形</p>
-<p>在Hierarchy面板中创建Terrain对象。使用Inspector面板中的Terrain组件，导入先前素材包中的地面材质、植物等素材。用Plaint Texture设置地形材质，使用Set Height绘制山，使用Smooth Height绘制斜坡，使用Plant Trees和Plant Detail绘制其他细节。</p>
+<h4 id="3-绘制地形"><a href="#3-绘制地形" class="headerlink" title="3. 绘制地形"></a>3. 绘制地形</h4><p>在Hierarchy面板中创建Terrain对象。使用Inspector面板中的Terrain组件，导入先前素材包中的地面材质、植物等素材。用Plaint Texture设置地形材质，使用Set Height绘制山，使用Smooth Height绘制斜坡，使用Plant Trees和Plant Detail绘制其他细节。</p>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129094439502.png" alt="迷宫"></p>
-</li>
-</ol>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129094712106.png" alt="山路"></p>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129095818380.png" alt="山坡"></p>
 <br>
 
-<ol start="4">
-<li><p>设置背景音乐</p>
-<p>创建一个空对象，命名为Music Manager，添加Audio Source组件和脚本组件，绑定背景音乐脚本，并把指定的音乐拖入选择框。</p>
+<h4 id="4-背景音乐"><a href="#4-背景音乐" class="headerlink" title="4. 背景音乐"></a>4. 背景音乐</h4><p>创建一个空对象，命名为Music Manager，添加Audio Source组件和脚本组件，绑定背景音乐脚本，并把指定的音乐拖入选择框。</p>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129095521779.png" alt="音乐管理器"></p>
-</li>
-</ol>
 <p>游戏开始后，会自动循环播放背景音乐。</p>
 <br>
 
-<ol start="5">
-<li><p>玩家</p>
-<p>创建一个3D对象命名Player。为了实现第一人称效果，需把主摄像机拖动到Player对象底下，再把十字弩拖动到主摄像机底下。</p>
-</li>
-</ol>
+<h4 id="5-玩家"><a href="#5-玩家" class="headerlink" title="5. 玩家"></a>5. 玩家</h4><p>创建一个3D对象命名Player。为了实现第一人称效果，需把主摄像机拖动到Player对象底下，再把十字弩拖动到主摄像机底下。</p>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129101851274.png" alt="玩家组件结构"></p>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129102945907.png" alt="将弩弓和摄像机调整至合适位置"></p>
 <p>给Player对象增加碰撞组件和刚体组件，并把Freeze Rotation的x、y、z轴都勾选，避免不必要的旋转。绑定Camera Controller脚本，用于接收键盘输入，控制玩家游走。</p>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129103815497.png" alt="玩家面板"></p>
 <br>
 
-<ol start="6">
-<li><p>多摄像机</p>
-<p>为了增加射击体验，玩家按右键时能瞄准，并在视野中显示准星；玩家按下F1时，画面右上角会出现鸟瞰图，标识玩家目前位置。</p>
+<h4 id="6-多摄像机"><a href="#6-多摄像机" class="headerlink" title="6. 多摄像机"></a>6. 多摄像机</h4><p>为了增加射击体验，玩家按右键时能瞄准，并在视野中显示准星；玩家按下F1时，画面右上角会出现鸟瞰图，标识玩家目前位置。</p>
 <p>新建一个TopDownCamera相机作为鸟瞰图相机，将X轴旋转调整为90度，使其朝向地面。然后为其添加CameraFollow脚本，让它保持在目标物体（玩家）上方50个单位处。</p>
 <p>新建一个RenderTexture，命名为TopDownRenderTexture，将其绑定到TopDownCamera的Target Texture中。这样，鸟瞰图摄像机的画面将被渲染到Texture里。再在Hierarchy面板里新建一个Raw Image，在Texture里绑定TopDownRenderTexture。在Rect Transform组件内调整Image的位置，让它固定在画面右上角。</p>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129142923918.png" alt="鸟瞰图摄像机"></p>
@@ -178,19 +158,13 @@
 <p>最终实现如图：</p>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129143758388.png" alt="右上角显示鸟瞰图"></p>
 <br>
-</li>
-<li><p>靶场</p>
-<p>给静态靶和动态靶都加上标签，以便区分。网格碰撞体为资源自带。给动态靶额外加上刚体组件，并勾选is Kinematic。为动态靶绑定移动动画。将其放置到场景合适位置。</p>
+
+<h4 id="7-靶场"><a href="#7-靶场" class="headerlink" title="7. 靶场"></a>7. 靶场</h4><p>给静态靶和动态靶都加上标签，以便区分。网格碰撞体为资源自带。给动态靶额外加上刚体组件，并勾选is Kinematic。为动态靶绑定移动动画。将其放置到场景合适位置。</p>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129104303236.png" alt="静态靶"></p>
-</li>
-</ol>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129155251585.png" alt="动态靶"></p>
 <br>
 
-<ol start="8">
-<li>射击</li>
-</ol>
-<p>使用动画实现拉弓射箭效果。其中hold是混合树。</p>
+<h4 id="8-射击"><a href="#8-射击" class="headerlink" title="8. 射击"></a>8. 射击</h4><p>使用动画实现拉弓射箭效果。其中hold是混合树。</p>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129164639032.png" alt="动画"></p>
 <p><img src="/2024/11/29/Unity%E7%AC%AC%E4%B8%80%E4%BA%BA%E7%A7%B0%E5%B0%84%E7%AE%AD%E6%B8%B8%E6%88%8F%E5%88%B6%E4%BD%9C/image-20241129164815968.png" alt="混合树"></p>
 <p>在弩弓上绑定Archer Controller，射箭预备代码如下：</p>
